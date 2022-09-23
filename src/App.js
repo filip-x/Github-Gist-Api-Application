@@ -11,7 +11,7 @@ function App() {
   {
     console.log("test")
     e.preventDefault();
-     axios.get(`https://api.github.com/users/${e.target.searchQuery.value}/gists`).then(response => setGists(response.data.map(gistData => GistComponent(gistData))));
+     axios.get(`https://api.github.com/users/${e.target.searchQuery.value}/gists`).then(response => setGists(response.data.map(gistData => <GistComponent {...gistData}/>)));
     //axios.get(`https://api.github.com/users/${e.target.searchQuery.value}/gists`).then(console.log);
 
 
@@ -22,7 +22,7 @@ function App() {
         <input type="text" name="searchQuery" placeholder = {"Enter a username"}></input>
         <button type="submit">Search</button>
       </form>
-      {gists && JSON.stringify(gists)}
+      {gists}
     </div>
   );
 }
