@@ -16,7 +16,9 @@ function App() {
       );
       currPage++;
       gistList = gistList.concat(
-        result.data.map((gistData) => <GistComponent {...gistData} />)
+        result.data.map((gistData) => (
+          <GistComponent key={Date.now() * Math.random()} {...gistData} />
+        ))
       );
     } while (result.data.length > 0);
     setGists(gistList);

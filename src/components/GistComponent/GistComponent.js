@@ -33,6 +33,8 @@ const GistComponent = (gistData) => {
     };
     runAsyncEffect();
   }, []);
+
+  //here starts the jsx code
   return (
     <div className='GistComponent'>
       <div className='gistFiles'>
@@ -41,8 +43,13 @@ const GistComponent = (gistData) => {
         ))}
       </div>
       <div className='users'>
-        {topUsers && topUsers.map((user) => <UserDisplayComponent {...user} />)}
-        {topUsers && topUsers.length === 0 && <span>This Gist has never been forked</span>}
+        {topUsers &&
+          topUsers.map((user) => (
+            <UserDisplayComponent key={Date.now() * Math.random()} {...user} />
+          ))}
+        {topUsers && topUsers.length === 0 && (
+          <span>This Gist has never been forked</span>
+        )}
       </div>
     </div>
   );
