@@ -1,23 +1,28 @@
-import logo from './logo.svg';
+import axios from 'axios';
+import { useState } from 'react';
 import './App.css';
+import GistComponent from './components/GistComponent/GistComponent';
+
+
 
 function App() {
+  const [gists, setGists] = useState();
+  function onSubmit(e)
+  {
+    console.log("test")
+    e.preventDefault();
+     axios.get(`https://api.github.com/users/${e.target.searchQuery.value}/gists`).then(response => setGists(response.data.map(gistData => GistComponent(gistData))));
+    //axios.get(`https://api.github.com/users/${e.target.searchQuery.value}/gists`).then(console.log);
+
+
+  }
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <form onSubmit={onSubmit}>
+        <input type="text" name="searchQuery" placeholder = {"Enter a username"}></input>
+        <button type="submit">Search</button>
+      </form>
+      {gists && JSON.stringify(gists)}
     </div>
   );
 }
