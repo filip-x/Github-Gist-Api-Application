@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import PropTypes from 'prop-types';
 import './FileDisplayComponent.css';
 import { CodeBlock } from 'react-code-blocks';
 import axios from 'axios';

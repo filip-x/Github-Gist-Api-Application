@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
 import './GistComponent.css';
 import axios from 'axios';
 import FileDisplayComponent from '../FileDisplayComponent/FileDisplayComponent';
@@ -23,11 +22,9 @@ const GistComponent = (gistData) => {
       // then we remove the duplicate users in order to only have distinct users.
       forkList.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt));
       const forkedUsers = forkList.map((fork) => fork.owner);
-      console.log('How many users before filter:' + forkedUsers.length);
       const uniqueUsers = forkedUsers.filter(
         (item, pos) => forkedUsers.indexOf(item) === pos
       );
-      console.log('How many users after filter:' + forkedUsers.length);
       const topThree = uniqueUsers.slice(0, 3);
       setTopUsers(topThree);
     };
@@ -39,7 +36,7 @@ const GistComponent = (gistData) => {
     <div className='GistComponent'>
       <div className='gistFiles'>
         {Object.entries(files).map(([key, value]) => (
-          <FileDisplayComponent {...value} />
+          <FileDisplayComponent key={Date.now() * Math.random()} {...value} />
         ))}
       </div>
       <div className='users'>
