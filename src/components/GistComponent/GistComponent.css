@@ -1,1 +1,18 @@
-.GistComponent {}
+.GistComponent {
+  width: 80%;
+  border: 1px solid grey;
+  border-radius: 7px;
+  margin: 5px;
+  padding: 5px;
+  font-size: 17px;
+}
+.gistFiles {
+  width: 100%;
+  border-bottom: 1px solid grey;
+  padding-bottom: 10px;
+  margin-bottom: 10px;
+}
+.users {
+  display: flex;
+  flex-direction: row;
+}

@@ -1,0 +1,16 @@
+.UserDisplayComponent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 5px;
+}
+
+.userAvatar {
+  height: 30px;
+  width: 30px;
+  border-radius: 30%;
+  display: block;
+}
+.userName {
+  padding-top: 1px;
+}

@@ -1,0 +1,14 @@
+.FileDisplayComponent {
+  display: block;
+  margin-bottom: 3px;
+}
+.fileLanguage {
+  border: 1px solid grey;
+  margin-right: 3px;
+  border-radius: 5px;
+  padding: 2px;
+  background-color: lightyellow;
+}
+.fileName {
+
+}

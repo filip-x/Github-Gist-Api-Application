@@ -2,43 +2,49 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import './GistComponent.css';
 import axios from 'axios';
-
+import FileDisplayComponent from '../FileDisplayComponent/FileDisplayComponent';
+import UserDisplayComponent from '../UserDisplayComponent/UserDisplayComponent';
 
 const GistComponent = (gistData) => {
   const files = gistData.files;
-  const [topUsers,setTopUsers] = useState();
+  const [topUsers, setTopUsers] = useState();
   const forksUrl = gistData.forks_url;
-  useEffect(()=>{
+  useEffect(() => {
     const runAsyncEffect = async () => {
       let forkList = [];
-      let currPage =1;
+      let currPage = 1;
       let result;
-      do{
-        result = await axios.get(forksUrl+"?page="+currPage);
+      do {
+        result = await axios.get(forksUrl + '?page=' + currPage);
         currPage++;
         forkList = forkList.concat(result.data);
-      }while(result.data.length >0);
+      } while (result.data.length > 0);
       //after we get all forks we sort them by creation date and then we extract the users who forked them,
       // then we remove the duplicate users in order to only have distinct users.
-      forkList.sort((a,b)=>new Date(a.createdAt)-new Date(b.createdAt));
-      const forkedUsers = forkList.map((fork)=>fork.owner);
-      console.log("How many users before filter:"+forkedUsers.length);
-      const uniqueUsers = forkedUsers.filter((item,pos)=> forkedUsers.indexOf(item) === pos)
-      console.log("How many users after filter:"+forkedUsers.length);
-      const topThree = uniqueUsers.slice(0,3);
+      forkList.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt));
+      const forkedUsers = forkList.map((fork) => fork.owner);
+      console.log('How many users before filter:' + forkedUsers.length);
+      const uniqueUsers = forkedUsers.filter(
+        (item, pos) => forkedUsers.indexOf(item) === pos
+      );
+      console.log('How many users after filter:' + forkedUsers.length);
+      const topThree = uniqueUsers.slice(0, 3);
       setTopUsers(topThree);
-    }
+    };
     runAsyncEffect();
-  },[]);
+  }, []);
   return (
-  <div className="GistComponent">
-    <div>
-      {Object.entries(files).map(([key,value]) => <span key={key}> {value.language} {value.filename}</span>)}
+    <div className='GistComponent'>
+      <div className='gistFiles'>
+        {Object.entries(files).map(([key, value]) => (
+          <FileDisplayComponent {...value} />
+        ))}
+      </div>
+      <div className='users'>
+        {topUsers && topUsers.map((user) => <UserDisplayComponent {...user} />)}
+        {topUsers && topUsers.length === 0 && <span>This Gist has never been forked</span>}
+      </div>
     </div>
-    <div>
-      {topUsers && topUsers.map((user)=><span>{user.login}</span>)}
-    </div>
-  </div>
-  )
-}
+  );
+};
 export default GistComponent;
